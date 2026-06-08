@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEAVE Building Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --white:#FFFFFF;--warm-grey:#E5E3DC;--orange:#D4967D;--orange-dark:#b87660;
+    --orange-light:#f2e4dc;--teal:#495A58;--dark:#303636;--mid:#5a6464;
+  }
+  body{font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);font-size:15px;line-height:1.7}
+  h1,h2,h3,h4{font-family:'Tenor Sans',serif;font-weight:400}
+  nav{position:sticky;top:0;background:var(--white);border-bottom:1px solid var(--warm-grey);z-index:100;padding:0 2rem}
+  .nav-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+  .nav-logo{font-family:'Tenor Sans',serif;font-size:15px;letter-spacing:0.12em;color:var(--dark);text-decoration:none}
+  .nav-links{display:flex;gap:1.5rem}
+  .nav-links a{font-size:13px;color:var(--mid);text-decoration:none;transition:color 0.2s;cursor:pointer}
+  .nav-links a:hover{color:var(--orange)}
+  .cover{min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 2rem;background:var(--white)}
+  .cover-inner{max-width:680px}
+  .cover h1{font-size:clamp(1.8rem,4vw,3rem);color:var(--orange);line-height:1.3;margin-bottom:1.25rem}
+  .cover p{font-size:1rem;color:var(--mid);max-width:520px;margin:0 auto 1rem}
+  .cover p.tagline{font-size:0.95rem;color:var(--mid);margin-bottom:2.5rem;font-style:italic}
+  .btn{display:inline-block;padding:0.75rem 2rem;background:var(--orange);color:var(--white);text-decoration:none;font-size:14px;letter-spacing:0.05em;border-radius:2px;transition:background 0.2s;cursor:pointer}
+  .btn:hover{background:var(--orange-dark)}
+  .btn-outline{background:transparent;color:var(--teal);border:1px solid var(--teal);margin-left:1rem;cursor:pointer}
+  .btn-outline:hover{background:var(--warm-grey)}
+  .section-wrap{padding:5rem 2rem}
+  .section-wrap+.section-wrap{border-top:1px solid var(--warm-grey)}
+  .section-inner{max-width:900px;margin:0 auto}
+  .section-wrap.bg-teal{background:var(--teal);border-top:none}
+  .section-wrap.bg-dark{background:var(--dark);border-top:none}
+  .section-wrap.bg-warm{background:var(--warm-grey);border-top:none}
+  .section-label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem}
+  .section-wrap.bg-teal .section-label,.section-wrap.bg-dark .section-label{color:var(--orange)}
+  .section-wrap.bg-warm .section-label{color:var(--teal)}
+  .section-title{font-size:clamp(1.5rem,3vw,2.2rem);color:var(--dark);margin-bottom:1.25rem}
+  .section-wrap.bg-teal .section-title,.section-wrap.bg-dark .section-title{color:var(--white)}
+  .section-wrap.bg-warm .section-title{color:var(--dark)}
+  .section-intro{color:var(--mid);max-width:640px;margin-bottom:2rem;font-size:0.95rem}
+  .section-wrap.bg-teal .section-intro,.section-wrap.bg-dark .section-intro{color:var(--warm-grey)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+  .about-card{background:rgba(255,255,255,0.1);padding:2rem;border-radius:2px;border:1px solid rgba(255,255,255,0.15)}
+  .about-card h3{font-size:1rem;color:var(--orange);margin-bottom:0.75rem;font-family:'Tenor Sans',serif}
+  .about-card p,.about-card li{font-size:0.9rem;color:var(--warm-grey)}
+  .about-card ul{padding-left:1.2rem}
+  .about-card li{margin-bottom:0.4rem}
+  .services-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+  .service-card{border:1px solid var(--warm-grey);padding:2rem;border-radius:2px;position:relative;transition:border-color 0.2s;background:var(--white)}
+  .service-card:hover{border-color:var(--orange)}
+  .service-num{font-family:'Tenor Sans',serif;font-size:2.5rem;color:var(--warm-grey);position:absolute;top:1rem;right:1.5rem;line-height:1}
+  .service-card h3{font-family:'Tenor Sans',serif;font-size:1.15rem;color:var(--dark);margin-bottom:0.4rem}
+  .service-price{font-size:0.85rem;color:var(--orange);font-weight:500;margin-bottom:0.75rem}
+  .service-card p{font-size:0.9rem;color:var(--mid)}
+  .stage{margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,0.1)}
+  .stage:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .stage-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+  .stage-num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--orange);color:var(--white);font-family:'Tenor Sans',serif;font-size:1rem;border-radius:50%;flex-shrink:0}
+  .stage h3{font-family:'Tenor Sans',serif;font-size:1.2rem;color:var(--white)}
+  .stage p{font-size:0.9rem;color:var(--warm-grey);margin-bottom:0.75rem;max-width:640px}
+  .stage ul{padding-left:1.2rem}
+  .stage li{font-size:0.88rem;color:var(--warm-grey);margin-bottom:0.3rem;opacity:0.9}
+  .stage-sub{margin-top:0.75rem;color:var(--orange);font-family:'Tenor Sans',serif;font-size:0.85rem}
+  .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .value-card{padding:1.5rem;border-left:3px solid var(--orange);background:var(--white);border-top:1px solid var(--warm-grey);border-right:1px solid var(--warm-grey);border-bottom:1px solid var(--warm-grey)}
+  .value-card h3{font-family:'Tenor Sans',serif;font-size:1rem;color:var(--teal);margin-bottom:0.5rem}
+  .value-card ul{padding-left:1rem}
+  .value-card li{font-size:0.85rem;color:var(--mid);margin-bottom:0.25rem}
+  .costs-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+  table{width:100%;border-collapse:collapse;font-size:0.9rem}
+  th{font-family:'Tenor Sans',serif;font-weight:400;font-size:0.8rem;color:var(--teal);text-align:left;padding:0.5rem 0;border-bottom:2px solid var(--orange-light);letter-spacing:0.05em}
+  td{padding:0.6rem 0;border-bottom:1px solid var(--warm-grey);color:var(--mid)}
+  td:first-child{color:var(--dark)}
+  .cost-note{font-size:0.8rem;color:var(--mid);margin-top:1rem;font-style:italic}
+  .consultant-item{padding:0.75rem 1rem;background:var(--warm-grey);font-size:0.85rem;color:var(--mid);border-radius:2px;margin-bottom:0.5rem}
+  .consultant-item strong{display:block;color:var(--dark);font-weight:500;margin-bottom:0.1rem}
+  .resources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:3rem}
+  .resource-link{padding:1rem 1.25rem;border:1px solid rgba(255,255,255,0.2);border-radius:2px;text-decoration:none;transition:border-color 0.2s;display:block}
+  .resource-link:hover{border-color:var(--orange)}
+  .resource-link span{display:block;font-size:0.85rem;color:var(--white);margin-bottom:0.25rem;font-family:'Tenor Sans',serif}
+  .resource-link small{font-size:0.78rem;color:var(--warm-grey);opacity:0.7}
+  .contact-box{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+  .contact-box p{font-size:0.9rem;color:var(--warm-grey);margin-bottom:1.5rem}
+  .contact-details p{font-size:0.9rem;color:var(--warm-grey);margin-bottom:0.4rem}
+  .contact-details a{color:var(--orange);text-decoration:none}
+  .contact-details .quals{font-size:0.78rem;color:var(--mid);margin-top:0.75rem;line-height:1.7}
+  footer{text-align:center;padding:2rem;font-size:0.8rem;color:var(--mid);border-top:1px solid var(--warm-grey);background:var(--white)}
+  @media(max-width:680px){
+    .about-grid,.services-grid,.costs-grid,.values-grid,.resources-grid,.contact-box{grid-template-columns:1fr}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">WEAVE building design</span>
+    <div class="nav-links">
+      <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+      <a onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Services</a>
+      <a onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'})">Process</a>
+      <a onclick="document.getElementById('values').scrollIntoView({behavior:'smooth'})">Design considerations</a>
+      <a onclick="document.getElementById('costs').scrollIntoView({behavior:'smooth'})">Costs</a>
+      <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div id="cover" class="cover">
+  <div class="cover-inner">
+    <h1>Supporting you to create a home that reflects your values</h1>
+    <p>Healthy, functional, and designed for your climate and site.</p>
+    <p>I'm Denisia, a residential building designer based in Denmark, WA. At WEAVE, I welcome your intuitive ideas and ground them in thoughtful, climate-responsive design. Together, we'll shape a home that feels like you, supports your wellbeing, and makes the most of your site and lifestyle.</p>
+    <p class="tagline">Always grounded in balance and shaped by what matters.</p>
+    <a href="https://weave-building-design.moxieapp.com/public/initial-consultation" target="_blank" class="btn">Book an initial consultation</a>
+  </div>
+</div>
+
+<div id="about" class="section-wrap bg-teal">
+  <div class="section-inner">
+    <p class="section-label">About</p>
+    <h2 class="section-title">What WEAVE does</h2>
+    <p class="section-intro">WEAVE building design is a residential building design practice based in Denmark, Western Australia, specialising in healthy, climate-responsive and functional homes.</p>
+    <p class="section-intro" style="margin-top:-1rem">WEAVE provides the design foundations that matter most: a well-considered floor plan, an optimised building envelope, and documentation for approvals and construction. It's a focused service that gives you clarity and confidence to move forward, without the full scope of architectural services such as contract administration and on-site project management. This means lower professional fees, but it also means you'll take on more of the coordination role during construction.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Services include</h3>
+        <ul>
+          <li>Custom home design and drafting (Denmark WA and surrounds)</li>
+          <li>Advice on healthy construction materials and practices</li>
+          <li>Pre-designed plans that consider climate and orientation</li>
+        </ul>
+      </div>
+      <div class="about-card">
+        <h3>What guides the work</h3>
+        <p>Every project is approached with a focus on simplicity, functionality, healthy building practices, energy efficiency, and a genuine connection to your site. The goal is always a home that works for your life, not just on paper.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="services" class="section-wrap">
+  <div class="section-inner">
+    <p class="section-label">Services</p>
+    <h2 class="section-title">How I can help</h2>
+    <p class="section-intro">A client may require WEAVE's involvement at one stage or across the full journey, from a single consultation to a complete design package.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-num">01</span>
+        <h3>Initial Consultation</h3>
+        <p class="service-price">$230</p>
+        <p>A conversation to help you clarify your goals, understand the design process, and determine the best next steps for your project. Before we meet, you'll receive a brief to complete — a simple but effective way to get clear on your values and what you truly need in a home.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">02</span>
+        <h3>Home Concept Review</h3>
+        <p class="service-price">$1,900</p>
+        <p>An assessment of your existing floor plan focused on flow, energy performance, healthy materials, and overall functionality. You'll receive annotated plans with clear, climate-responsive recommendations, plus guidance on healthy and energy-efficient construction. Option to add a preliminary NatHERS assessment.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">03</span>
+        <h3>Concept Design</h3>
+        <p class="service-price">$4,000 – $6,000</p>
+        <p>A functional home concept design tailored to your values, site conditions, and brief. Includes guidance on healthy and energy-efficient design and construction, ensuring you get the fundamentals right for your specific needs and location.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">04</span>
+        <h3>Comprehensive Design</h3>
+        <p class="service-price">$15,000 – $18,000</p>
+        <p>A complete home design package including everything needed for approvals and construction: concept design, planning approval drawings (if required), and detailed building permit documentation suitable for certification, builder pricing, and construction. The entire process is guided by your brief, site conditions, and shared values.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="process" class="section-wrap bg-dark">
+  <div class="section-inner">
+    <p class="section-label">The process</p>
+    <h2 class="section-title">From design to construction</h2>
+    <p class="section-intro">Following are the stages involved in getting a project from design to construction. You may engage WEAVE for all stages or just the ones relevant to your needs.</p>
+    <div class="stage">
+      <div class="stage-header"><div class="stage-num">1</div><h3>Concept Stage</h3></div>
+      <p>Following an initial consultation, a comprehensive brief aligned with your values and a fee proposal will be prepared. A site plan and analysis will be prepared using existing information and on-site measurements. If required, a bushfire attack level (BAL) assessment and feature or contour survey may also be needed. Drawings are then prepared to convey the preliminary concept design. The design aims to combine your values and needs with WEAVE's principles of simplicity, small but spacious rooms, functional relationships, healthy building practices, energy efficiency, solar passive design, and connection to your site.</p>
+      <p class="stage-sub">Typical inclusions</p>
+      <ul>
+        <li>Value-aligned brief</li>
+        <li>Site analysis and documentation of existing conditions</li>
+        <li>Concept design drawings: site plan, floor plan, section</li>
+        <li>In-person or online meeting</li>
+        <li>Revised concept drawings: site plan, floor plan, elevations, section</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div class="stage-header"><div class="stage-num">2</div><h3>Planning Approval Stage</h3></div>
+      <p>Following the concept drawings, the design is further developed. You are encouraged to be part of this process and may involve other professionals at this stage. It is recommended to test the thermal performance of the design and obtain cost advice at this point. Once finalised, a set of drawings is prepared for council planning approval if required.</p>
+      <p class="stage-sub">Typical inclusions</p>
+      <ul>
+        <li>Liaison with consultants and relevant authorities</li>
+        <li>Design development drawings: site plan, floor plan, section, internal and external 3D views</li>
+        <li>Preliminary NatHERS energy assessment to optimise design (recommended)</li>
+        <li>Planning approval drawings: site plan, floor plan, elevations, section</li>
+        <li>In-person or online meeting</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div class="stage-header"><div class="stage-num">3</div><h3>Building Approval Stage</h3></div>
+      <p>This stage develops the approved design into a detailed set of drawings suitable for building certification, builder quoting, and construction. While the primary purpose is to obtain a building permit, WEAVE's documentation goes further, supporting a coordinated and efficient build by resolving key design decisions early and clearly identifying required selections, reducing uncertainty during construction.</p>
+      <p class="stage-sub">Typical inclusions</p>
+      <ul>
+        <li>Liaison with consultants and relevant authorities</li>
+        <li>Design development drawings: site plan, floor plan, elevations, 3D views, detail section, wet area internal elevations, window and door schedule, electrical plan</li>
+        <li>Building approval drawings: site plan, stormwater plan, floor plan, elevations, detail section, specifications</li>
+        <li>NatHERS energy assessment</li>
+        <li>In-person or online meeting</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div class="stage-header"><div class="stage-num">4</div><h3>Construction</h3></div>
+      <p>WEAVE's standard service concludes at the completion of the Building Approval Stage. Construction administration and on-site project management are not included. The building permit drawings are intended for certification, builder pricing, and a smooth construction process, including insulation, glazing, waterproofing, internal elevations, window and door schedules, and confirmed or base selections for fittings and finishes.</p>
+      <p>If design advice, drawing amendments, or clarification is required during construction, these services can be provided as a separate, clearly scoped service by agreement. Both PDF and CAD files will be supplied to ensure a smooth handover to any other professionals you choose to engage.</p>
+      <p class="stage-sub">Regional availability</p>
+      <ul>
+        <li>Building permit and planning approval services are available for projects in and around Denmark, Western Australia</li>
+        <li>For projects outside this region, WEAVE offers concept design, project review and advice services only</li>
+        <li>Concept drawings and advice can be taken to a local building professional for further development</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="values" class="section-wrap bg-warm">
+  <div class="section-inner">
+    <p class="section-label">Design considerations</p>
+    <h2 class="section-title">Things to think about</h2>
+    <p class="section-intro">The following themes are worth reflecting on as you develop your brief. They can help clarify what matters most to you and shape the kind of home you want to create.</p>
+    <div class="values-grid">
+      <div class="value-card"><h3>Shelter</h3><ul><li>Protection from the elements</li><li>Comfort</li><li>Support for daily life</li></ul></div>
+      <div class="value-card"><h3>Sustainability</h3><ul><li>Passive design principles</li><li>Build less and smaller</li><li>Environmentally friendly materials</li><li>Flexibility and accessibility</li><li>Consideration of maintenance</li></ul></div>
+      <div class="value-card"><h3>Health</h3><ul><li>Ventilation and moisture control</li><li>Sunlight</li><li>Low-toxicity materials and finishes</li><li>Active design to facilitate movement</li></ul></div>
+      <div class="value-card"><h3>Beauty</h3><ul><li>Balance and simplicity</li><li>Connection to the outdoors</li><li>Responding to place and circumstance</li></ul></div>
+      <div class="value-card"><h3>Cost</h3><ul><li>Assess desires, needs and wants</li><li>Balance cost and lifestyle</li><li>Build less and smaller</li></ul></div>
+      <div class="value-card"><h3>Water wise landscaping</h3><ul><li>Permeable surfaces</li><li>Rainwater tanks</li><li>Swales</li><li>Mulch</li><li>Selective plant species</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<div id="costs" class="section-wrap">
+  <div class="section-inner">
+    <p class="section-label">Costs</p>
+    <h2 class="section-title">Indicative fees and project costs</h2>
+    <p class="section-intro">The figures below are a guide for early planning for a 100–180m² family home with mid-range finishes. A detailed fee proposal will be prepared once your brief and site information are confirmed. All costs should be verified with relevant professionals at the time of your project.</p>
+    <div class="costs-grid">
+      <div>
+        <table>
+          <thead><tr><th>WEAVE services</th><th>Approx. cost (AUD)</th></tr></thead>
+          <tbody>
+            <tr><td>Initial Consultation</td><td>$230</td></tr>
+            <tr><td>Home Concept Review</td><td>$1,900</td></tr>
+            <tr><td>Concept Design</td><td>$4,000 – $6,000</td></tr>
+            <tr><td>Comprehensive Design</td><td>$15,000 – $18,000</td></tr>
+          </tbody>
+        </table>
+        <table style="margin-top:2rem">
+          <thead><tr><th>Other typical project costs</th><th>Approx. cost (AUD)</th></tr></thead>
+          <tbody>
+            <tr><td>Feature Survey (if applicable)</td><td>$2,000</td></tr>
+            <tr><td>BAL Assessment (if applicable)</td><td>$1,000</td></tr>
+            <tr><td>NatHERS Energy Assessment</td><td>$500 – $1,000</td></tr>
+            <tr><td>Geotechnical Site Classification</td><td>$1,500</td></tr>
+            <tr><td>Structural Engineering</td><td>$2,500</td></tr>
+            <tr><td>Council Fees</td><td>$4,000</td></tr>
+            <tr><td>Water Corporation Fees (if applicable)</td><td>$500</td></tr>
+            <tr><td>Construction (min.)</td><td>$4,500/m²</td></tr>
+            <tr><td>Off-grid Solar</td><td>$30,000 – $50,000</td></tr>
+          </tbody>
+        </table>
+        <p class="cost-note">All figures are indicative only. Construction costs can vary significantly depending on site conditions, design complexity, materials, and availability of trades.</p>
+      </div>
+      <div>
+        <p style="font-family:'Tenor Sans',serif;font-size:0.8rem;color:var(--teal);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem">Additional consultants you may need</p>
+        <div class="consultant-item"><strong>Structural Engineer</strong>Structural certification for building approval</div>
+        <div class="consultant-item"><strong>Geotechnical Engineer</strong>Site classification and soil report</div>
+        <div class="consultant-item"><strong>BAL Assessor</strong>Bushfire risk and construction requirements</div>
+        <div class="consultant-item"><strong>Energy Assessor</strong>Final energy rating for building approval</div>
+        <div class="consultant-item"><strong>Landscape Designer</strong>Design of external spaces and site integration</div>
+        <div class="consultant-item"><strong>Building Biologist</strong>Indoor environmental quality assessment</div>
+        <div class="consultant-item"><strong>Building Certifier</strong>Independent approval and certification</div>
+        <div class="consultant-item"><strong>Quantity Surveyor</strong>Independent cost estimation</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="resources" class="section-wrap bg-teal">
+  <div class="section-inner">
+    <p class="section-label">Resources</p>
+    <h2 class="section-title">Useful references</h2>
+    <p class="section-intro">A curated list of resources to support your planning and design journey.</p>
+    <div class="resources-grid">
+      <a class="resource-link" href="https://www.yourhome.gov.au/" target="_blank"><span>Your Home</span><small>yourhome.gov.au</small></a>
+      <a class="resource-link" href="https://espatial.dplh.wa.gov.au/planwa/Index.html?viewer=planwa" target="_blank"><span>Department of Planning WA</span><small>dplh.wa.gov.au</small></a>
+      <a class="resource-link" href="https://www.bom.gov.au/climate/data/" target="_blank"><span>Climate Data</span><small>bom.gov.au</small></a>
+      <a class="resource-link" href="https://www.thesba.com.au/" target="_blank"><span>Sustainable Builders Alliance</span><small>thesba.com.au</small></a>
+      <a class="resource-link" href="https://livablehousingaustralia.org.au" target="_blank"><span>Livable Housing Australia</span><small>livablehousingaustralia.org.au</small></a>
+      <a class="resource-link" href="https://www.agwa.com.au/WERS/WERS/Default.aspx" target="_blank"><span>Window Energy Rating Scheme</span><small>agwa.com.au</small></a>
+      <a class="resource-link" href="https://undercoverarchitect.com/" target="_blank"><span>Undercover Architect</span><small>undercoverarchitect.com</small></a>
+      <a class="resource-link" href="https://www.lighthouseteam.com.au/" target="_blank"><span>Lighthouse Architecture and Science</span><small>lighthouseteam.com.au</small></a>
+      <a class="resource-link" href="http://www.designful.com.au/" target="_blank"><span>Designful</span><small>designful.com.au</small></a>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="section-wrap bg-dark">
+  <div class="section-inner">
+    <p class="section-label">Next steps</p>
+    <h2 class="section-title">Ready to get started?</h2>
+    <div class="contact-box">
+      <div>
+        <p>Book an initial consultation and let's talk through your project.</p>
+        <a href="https://weave-building-design.moxieapp.com/public/initial-consultation" target="_blank" class="btn">Book an initial consultation</a>
+      </div>
+      <div class="contact-details">
+        <p><a href="mailto:denisia@weavebuildingdesign.com.au">denisia@weavebuildingdesign.com.au</a></p>
+        <p style="margin-top:0.25rem"><a href="tel:+61424506929" style="color:var(--warm-grey);text-decoration:none">+61 424 506 929</a></p>
+        <p style="margin-top:0.75rem;color:var(--warm-grey)">Denisia Menglet</p>
+        <p style="color:var(--warm-grey)">WEAVE building design</p>
+        <p style="color:var(--warm-grey)">@weave_buildingdesign</p>
+        <p class="quals">B. Planning and Design (Arch.) · B. Land. Arch.<br>Cert IV Home Energy Efficiency</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Committed to working with you to create a healthy, environmentally conscious and functional home aligned with your values.<br><br>© 2026 WEAVE building design · Denmark, Western Australia</footer>
+
+</body>
+</html>
